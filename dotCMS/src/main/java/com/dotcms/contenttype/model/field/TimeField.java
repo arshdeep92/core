@@ -41,8 +41,6 @@ public abstract class TimeField extends Field {
     @Value.Check
     public void check() {
         super.check();
-
         Preconditions.checkArgument(new FieldUtil().validTime(defaultValue()), this.getClass().getSimpleName() + " invalid defualt Value:" + defaultValue());
-
     }
 }

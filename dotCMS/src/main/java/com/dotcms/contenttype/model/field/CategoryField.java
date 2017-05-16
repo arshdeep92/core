@@ -17,7 +17,21 @@ public abstract class CategoryField extends Field {
 	private static final long serialVersionUID = 1L;
 
 	
+	  @Value.Check
+	  public CategoryField normalize() {
+	    super.check();
+	    FieldBuilder builder = FieldBuilder.builder(this);
+	    if (!acceptedDataTypes().contains(dataType()) && acceptedDataTypes().size() > 0) {
+	      builder.dataType(acceptedDataTypes().get(0));
+	    }
+	    if (!indexed()) {
+	      builder.indexed(true);
+	    }
 
+
+	    return (ImmutableCategoryField) FieldBuilder.builder(this).build();
+
+	  }
 
   @Override
 	public Class type() {

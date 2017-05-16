@@ -34,7 +34,7 @@ public abstract class EmptyField extends Field {
                 DataTypes.BOOL,
 
                 DataTypes.DATE,
-                DataTypes.NONE,
+
 
                 DataTypes.SYSTEM
                 );

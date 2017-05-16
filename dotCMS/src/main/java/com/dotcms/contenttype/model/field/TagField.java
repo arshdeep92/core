@@ -5,7 +5,6 @@ import java.util.List;
 import org.immutables.value.Value;
 
 import com.dotcms.repackage.com.google.common.collect.ImmutableList;
-import com.dotcms.repackage.com.google.common.base.Preconditions;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -16,7 +15,22 @@ public abstract class TagField extends Field  implements OnePerContentType{
 
 
 	private static final long serialVersionUID = 1L;
+	
+    @Value.Check
+    public TagField normalize() {
+      super.check();
+      FieldBuilder builder = FieldBuilder.builder(this);
+      if (!acceptedDataTypes().contains(dataType()) && acceptedDataTypes().size() > 0) {
+        builder.dataType(acceptedDataTypes().get(0));
+      }
+      if (!indexed()) {
+        builder.indexed(true);
+      }
 
+
+      return (ImmutableTagField) FieldBuilder.builder(this).build();
+
+    }
 	@Override
 	public  Class type() {
 		return  TagField.class;
@@ -26,13 +40,7 @@ public abstract class TagField extends Field  implements OnePerContentType{
 		return LegacyFieldTypes.getLegacyName(TagField.class);
 	}
 
-	@Value.Check
-	public void check() {
-		super.check();
-		if(iDate().after(legacyFieldDate)){
-			Preconditions.checkArgument(indexed(),"Tag Fields must be indexed");
-		}
-	}
+
 	@Value.Default
 	@Override
 	public boolean indexed() {
