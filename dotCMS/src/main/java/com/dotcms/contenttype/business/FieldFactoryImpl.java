@@ -188,7 +188,8 @@ public class FieldFactoryImpl implements FieldFactory {
       builder.fixed(oldField.fixed());
       builder.readOnly(oldField.readOnly());
       builder.dataType(oldField.dataType());
-      
+      builder.dbColumn(oldField.dbColumn());
+
     } catch (NotFoundInDbException e) {
       
       // assign an inode and db column if needed
@@ -212,7 +213,6 @@ public class FieldFactoryImpl implements FieldFactory {
       builder.variable(tryVar);
 
     }
-
 
 
     for (Field f : fieldsAlreadyAdded) {
