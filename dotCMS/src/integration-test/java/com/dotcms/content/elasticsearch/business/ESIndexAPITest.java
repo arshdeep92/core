@@ -217,11 +217,8 @@ public class ESIndexAPITest {
 		String pathToRepo = Config.getStringProperty("es.path.repo","test-resources");
 		File baseDirectory = new File(pathToRepo);
 		File toDelete = baseDirectory.getParentFile();
-		try {
-			FileUtil.deleteDir(toDelete.getAbsolutePath());
-		} catch (IOException e) {
-			Logger.error(ESIndexAPITest.class,e.getMessage());
-		}
+		com.liferay.util.FileUtil.deltree(toDelete.getAbsolutePath());
+
 
 	}
 }
